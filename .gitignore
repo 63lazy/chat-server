@@ -1,0 +1,36 @@
+# Build directories
+build/
+obj/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Compiled binaries
+*.exe
+*.out
+*.so
+*.dll
+
+# Object files
+*.o
+*.obj
+
+# Temporary files
+*.tmp
+*.temp
+
+# Log files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local

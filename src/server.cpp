@@ -131,7 +131,12 @@ private:
 
             //后续可以在这里根据 msg.header.type 做进一步分发//
             //例如：pool.enqueue(msg_handlers[msg.header.type], readyfd, msg);
-            this->pool.enqueue(client_func_map[header.type],msg);
+            auto it = client_func_map.find(header.type);
+            if (it != client_func_map.end()) {
+                this->pool.enqueue(it->second, msg);
+            } else {
+                cout << "未知消息类型: " << header.type << endl;
+            }
         }
 
         //处理完当前缓冲区数据后释放锁//
@@ -152,7 +157,13 @@ private:
             args.erase(0,1);
         }
 
-        pool.enqueue(server_func_map[tag],args);
+        // 检查命令是否存在
+        auto it = server_func_map.find(tag);
+        if (it != server_func_map.end()) {
+            pool.enqueue(it->second, args);
+        } else {
+            cout << "未知命令: " << tag << endl;
+        }
     }
     void handle_io(int readyfd){
         char buffer[1024];
